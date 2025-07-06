@@ -33,6 +33,8 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberStatus status;
 
+    private MemberDetail detail;
+
     public static Member register(MemberRegisterRequest registerRequest, PasswordEncoder passwordEncoder) {
         Member member = new Member();
 
