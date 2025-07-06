@@ -74,14 +74,14 @@ class MemberTest {
 
     @Test
     void verifyPassword() throws Exception {
-        assertThat(member.verifyPassword("secret", passwordEncoder)).isTrue();
+        assertThat(member.verifyPassword("longsecret", passwordEncoder)).isTrue();
         assertThat(member.verifyPassword("fail", passwordEncoder)).isFalse();
     }
 
 
     @Test
     void changeNickname() throws Exception {
-        assertThat(member.getNickname()).isEqualTo("Toby");
+        assertThat(member.getNickname()).isEqualTo("Toby2");
 
         member.changeNickname("change");
 
