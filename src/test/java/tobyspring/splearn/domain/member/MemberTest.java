@@ -1,12 +1,12 @@
-package tobyspring.splearn.domain;
+package tobyspring.splearn.domain.member;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static tobyspring.splearn.domain.MemberFixture.createMemberRegisterRequest;
-import static tobyspring.splearn.domain.MemberFixture.createPasswordEncoder;
+import static tobyspring.splearn.domain.member.MemberFixture.createMemberRegisterRequest;
+import static tobyspring.splearn.domain.member.MemberFixture.createPasswordEncoder;
 
 class MemberTest {
 
@@ -22,6 +22,7 @@ class MemberTest {
     @Test
     void registerMember() throws Exception {
         assertThat(member.getStatus()).isEqualTo(MemberStatus.PENDING);
+        assertThat(member.getDetail().getRegisteredAt()).isNotNull();
     }
 
 
@@ -37,6 +38,7 @@ class MemberTest {
         member.activate();
 
         assertThat(member.getStatus()).isEqualTo(MemberStatus.ACTIVE);
+        assertThat(member.getDetail().getActivatedAt()).isNotNull();
     }
 
 
@@ -53,21 +55,22 @@ class MemberTest {
     void deactivate() throws Exception {
         member.activate();
 
-        member.deActivate();
+        member.deactivate();
 
         assertThat(member.getStatus()).isEqualTo(MemberStatus.DEACTIVATED);
+        assertThat(member.getDetail().getDeactivatedAt()).isNotNull();
     }
 
 
     @Test
     void deactivateFail() throws Exception {
-        assertThatThrownBy(member::deActivate)
+        assertThatThrownBy(member::deactivate)
                 .isInstanceOf(IllegalStateException.class);
 
         member.activate();
-        member.deActivate();
+        member.deactivate();
 
-        assertThatThrownBy(member::deActivate)
+        assertThatThrownBy(member::deactivate)
                 .isInstanceOf(IllegalStateException.class);
     }
 
@@ -104,7 +107,7 @@ class MemberTest {
 
         assertThat(member.isActive()).isTrue();
 
-        member.deActivate();
+        member.deactivate();
 
         assertThat(member.isActive()).isFalse();
     }
